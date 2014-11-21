@@ -22,6 +22,10 @@
   </data>
  </layer>
  <objectgroup name="trigger-entities">
+  <properties>
+   <property name="xSpawn" value="400"/>
+   <property name="ySpawn" value="0"/>
+  </properties>
   <object name="levelTrigger" x="981" y="420" width="68" height="139">
    <properties>
     <property name="level" value="RicardoLevel02"/>
