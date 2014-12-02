@@ -40,6 +40,7 @@ var game = {
 	// Run on game resources loaded.
 	"loaded" : function () {
                 me.pool.register("mario", game.PlayerEntity, true);
+                me.pool.register("Minion", game.Minion);
                 
                 me.pool.register("levelTrigger", game.LevelTrigger);
                 
@@ -47,6 +48,6 @@ var game = {
 		me.state.set(me.state.PLAY, new game.PlayScreen());
 
 		// Start the game.
-		me.state.change(me.state.PLAY);
+		me.state.change(me.state.MENU);
 	}
 };

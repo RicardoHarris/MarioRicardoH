@@ -8,7 +8,7 @@ game.PlayerEntity = me.Entity.extend({
                 width: 128,
                 height: 128,
                 getShape: function() {
-                    return (new me.Rect(0, 0, 128, 128)).toPolygon();
+                    return (new me.Rect(0, 0, 30, 128)).toPolygon();
                 }
             }]);
         this.renderable.addAnimation("idle", [3]);
@@ -60,4 +60,24 @@ game.LevelTrigger = me.Entity.extend({
         me.state.current().resetPlayer(this.xSpawn, this.ySpawn);
     }
 
+});
+
+game.Minion = me.Entity.extend({
+    init: function(x, y, settings){
+        this._super(me.Entity, 'init', [x, y, {
+                image: "slime",
+                spritewidth: "60",
+                spriteheight: "28",
+                width: 60,
+                height: 28,
+                getShape: function() {
+                    return (new me.Rect(0, 0, 00, 28)).toPolygon();
+                }
+            }]);
+    },
+    
+    update: function(delta){
+        
+    }
+    
 });
