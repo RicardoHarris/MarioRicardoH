@@ -79,8 +79,8 @@ game.Minion = me.Entity.extend({
         var width = settings.width;
         x = this.pos.x;
         this.startX = x;
-        this.endX = x + width - spritewidth;
-        this.pos.x = x + width - spritewidth;
+        this.endX = x + width - this.spritewidth;
+        this.pos.x = x + width - this.spritewidth;
         this.updateBounds();
         
         this.alwaysUpdate = true;
