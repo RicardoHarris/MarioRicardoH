@@ -19,9 +19,20 @@ game.PlayerEntity = me.Entity.extend({
     },
     update: function(delta) {
         if (me.input.isKeyPressed("right")) {
+            this.flipX(false);
             this.body.vel.x += this.body.accel.x * me.timer.tick;
-        } else {
+        }else if (me.input.isKeyPressed("left")){
+            this.flipX(true);
+            this.body.vel.x -= this.body.accel.x * me.timer.tick;
+        }else{
             this.body.vel.x = 0;
+        }
+        
+        if (me.input.isKeyPressed("jump")){
+            if (!this.body.jumping && !this.body.falling) {
+                this.body.vel.y = -this.body.maxVel.y * me.timer.tick;
+                this.body.jumping = true;
+            }
         }
 
         this.body.update(delta);
@@ -40,7 +51,18 @@ game.PlayerEntity = me.Entity.extend({
         }
 
         ,collideHandler: function(response){
-
+            var ydif = this.pos.y - response.b.pos.y;
+            console.log(ydif);
+            
+            if(response.b.type === 'Minion'){
+                if(ydif <= -115){
+                    
+                }else{
+                    response.b.alive = false;
+                }
+                
+                me.state.change(me.state.MENU);
+            }
         }
 
 
@@ -109,7 +131,7 @@ game.Minion = me.Entity.extend({
             this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
             
         }else{
-            game.world.removeChild(this);
+            me.game.world.removeChild(this);
         }
         
         
