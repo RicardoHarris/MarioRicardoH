@@ -1,4 +1,9 @@
-// TODO
+/* ============================================================================
+ * YOU; The Player ; "Mario"
+ * ============================================================================
+ */
+
+//spawns mario into the world
 game.PlayerEntity = me.Entity.extend({
     init: function(x, y, settings) {
         this._super(me.Entity, 'init', [x, y, {
@@ -48,25 +53,33 @@ game.PlayerEntity = me.Entity.extend({
 
         this._super(me.Entity, "update", [delta]);
         return true;
-        }
+        },
 
-        ,collideHandler: function(response){
+        collideHandler: function(response){
             var ydif = this.pos.y - response.b.pos.y;
             console.log(ydif);
             
             if(response.b.type === 'Minion'){
                 if(ydif <= -115){
-                    
-                }else{
                     response.b.alive = false;
+                }else{
+                
+                me.state.change(me.state.MENU);    
                 }
                 
-                me.state.change(me.state.MENU);
             }
+        else if(response.b.type === 'mushroom'){
+                 console.log("Big!");
+             }
         }
 
 
 });
+
+/* ============================================================================
+ * Level Trigger ; Switching Levels
+ * ============================================================================
+ */
 
 game.LevelTrigger = me.Entity.extend({
     init: function(x, y, settings) {
@@ -83,6 +96,12 @@ game.LevelTrigger = me.Entity.extend({
     }
 
 });
+
+/* ============================================================================
+ * Minion ; Main Enemy
+ * ============================================================================
+ */
+
 
 game.Minion = me.Entity.extend({
     init: function(x, y, settings){
@@ -128,6 +147,9 @@ game.Minion = me.Entity.extend({
                 this.walkLeft = true;
             }
             this.flipX(!this.walkLeft);
+            //Adding an amount to our current position 
+            //But to determine whether we add a positive or a negative amount we check whether this.walkleft is true
+            //If this.walkLeft is true, we do the code to the left of the :, otherwise we do the right side.
             this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
             
         }else{
@@ -143,4 +165,28 @@ game.Minion = me.Entity.extend({
         
     }
     
+});
+
+/* ===========================================================================
+ * Mushroom ; Character Growth
+ * ===========================================================================
+ */
+
+game.Mushroom = me.Entity.extend({
+    init: function(x, y, settings) {
+        this._super(me.Entity, 'init', [x, y, {
+                image: "mushroom",
+                spritewidth: "64",
+                spriteheight: "64",
+                width: 64,
+                height: 64,
+                getShape: function() {
+                    return (new me.Rect(0, 0, 64, 64)).toPolygon();
+                }
+            }]);
+        
+        me.collision.check(this);
+        this.type = "mushroom";
+        
+    }
 });
