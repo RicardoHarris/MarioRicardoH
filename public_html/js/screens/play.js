@@ -9,7 +9,7 @@ game.PlayScreen = me.ScreenObject.extend({
         me.levelDirector.loadLevel("RicardoLevel01");
 
         this.resetPlayer(0, 400);
-
+        // added the left, right, and up "jump" arrow keys
         me.input.bindKey(me.input.KEY.RIGHT, "right");
         me.input.bindKey(me.input.KEY.LEFT, "left");
         me.input.bindKey(me.input.KEY.UP, "jump");
@@ -25,7 +25,7 @@ game.PlayScreen = me.ScreenObject.extend({
         // remove the HUD from the game world
         me.game.world.removeChild(this.HUD);
     },
-    
+    // puts player back into the world
     resetPlayer: function(x, y) {
         var player = me.pool.pull("mario", x, y, {});
         me.game.world.addChild(player, 5);
